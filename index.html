@@ -6,29 +6,47 @@
 
 <script type="text/javascript">
 
-$(document).ready(function(){
-    console.log("Doc is ready dude!!  Hey");
+    var reminders = ['test','test2','test3'];
 
-    $("#add_item_btn").on("click", addItem);
+    $(document).ready(function(){
+        console.log("Doc is ready dude!!  Hey");
 
-    $("remove_item_btn").on("click", removeItem);
+        populateReminders();
 
-} );
+        $("#add_item_btn").on("click", askUser);
 
-addItem = function(e){
-    var newItemText = prompt("What item do you want to add?");
-    var newReminder = $("<li>" + newItemText + " <a class='remove_item_btn'>Remove Item</a></li>");
-    newReminder.find("a.remove_item_btn").on("click", removeItem)
-    $("#reminders").append(newReminder);
+        $("remove_item_btn").on("click", removeItem);
 
-}
 
-removeItem = function(e){
-    $(this).closest("li").remove();
-}
+    } );
 
+    var addItem = function(newItemText){
+        var newReminder = $("<li>" + newItemText + " <a class='remove_item_btn'>Remove Item</a></li>");
+        newReminder.find("a.remove_item_btn").on("click", removeItem)
+        $("#reminders").append(newReminder);
+
+    }
+
+    var removeItem = function(e){
+        $(this).closest("li").remove();
+    }
+
+    var askUser = function(e) {
+        var newItemText = prompt("What item do you want to add?");
+        addItem(newItemText);
+    }
+
+    var populateReminders = function(){
+        for (var r in reminders) {
+            addItem(reminders[r]);
+        }
+
+
+    }
 
 </script>
+
+
 <style>
 
 a {
@@ -54,7 +72,7 @@ a {
 }
 
 .remove_item_btn {
-     padding:5px 5px 5px 5px;
+    padding:5px 5px 5px 5px;
     border:3px solid #1166AA;
     margin: 30px 10px 10px 10px;
     left-margin:80px;
@@ -69,9 +87,7 @@ a {
 
 <h2>Reminder List</h2>
 <ul id="reminders">
-    <li>
-        Do something cool.
-    </li>
+
 </ul>
 
 <a id="add_item_btn">Add Item</a>
